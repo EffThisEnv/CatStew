@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dumwccm60ennu"]
+
+[ext_resource type="PackedScene" uid="uid://bol382xenc506" path="res://MainScenes/CurrentUI.tscn" id="2_rpqi1"]
+[ext_resource type="PackedScene" uid="uid://c8ya5wl74x0nx" path="res://MainScenes/CurrentLevel.tscn" id="3_uxrcv"]
+
+[node name="MainScene" type="Node" unique_id=49388194]
+
+[node name="CurrentLevel" parent="." unique_id=1590668470 instance=ExtResource("3_uxrcv")]
+
+[node name="CurrentUI" parent="." unique_id=626615779 instance=ExtResource("2_rpqi1")]

@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://d17kuy5xfs8ip"]
+
+[ext_resource type="Script" uid="uid://cll6fwtm6ox80" path="res://Resources/Scripts/Characters/CharacterSpawner.cs" id="1_6qeyt"]
+[ext_resource type="Script" uid="uid://brjobuigcl5s1" path="res://Resources/Scripts/BattleScripts/BattleManager.cs" id="1_he3n4"]
+[ext_resource type="Script" uid="uid://cqgtws637y03i" path="res://Resources/Scripts/UI_Scripts/AttackButton.cs" id="1_wqic5"]
+[ext_resource type="Resource" uid="uid://bekq6utilntir" path="res://Resources/Scripts/Characters/PlayerCharacter.tres" id="2_srda1"]
+[ext_resource type="Resource" uid="uid://nq76edmj4ukc" path="res://Resources/Scripts/Characters/BasicEnemy.tres" id="3_18bk6"]
+[ext_resource type="Script" uid="uid://b523f4c1lpryy" path="res://Resources/Scripts/Characters/CharacterSlot.cs" id="4_he3n4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_srda1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_10u8c"]
+albedo_color = Color(0, 0, 0.07058824, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wtcfe"]
+font_size = 64
+
+[sub_resource type="Animation" id="Animation_0e48y"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_epypp"]
+resource_name = "TestAnimation"
+length = 2.0
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0hol4"]
+_data = {
+&"RESET": SubResource("Animation_0e48y"),
+&"TestAnimation": SubResource("Animation_epypp")
+}
+
+[node name="World" type="Node" unique_id=905634160]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1139827549]
+transform = Transform3D(0.824788, 0.24469325, -0.5097549, 0, 0.90151554, 0.4327467, 0.56544214, -0.3569243, 0.7435592, -21.863, 17.322, 29.93)
+projection = 1
+fov = 80.0
+size = 25.667
+
+[node name="Environment" type="Node3D" parent="." unique_id=1354617410 node_paths=PackedStringArray("characterSpawner")]
+script = ExtResource("1_he3n4")
+characterSpawner = NodePath("../Characters")
+
+[node name="TempGround" type="MeshInstance3D" parent="Environment" unique_id=479511211]
+transform = Transform3D(43.392963, 0, 0, 0, 0.3, 0, 0, 0, 43.914078, 0, -1.0766945, -2)
+mesh = SubResource("BoxMesh_srda1")
+surface_material_override/0 = SubResource("StandardMaterial3D_10u8c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=441075448]
+transform = Transform3D(0.82903755, -0.5088439, -0.23189351, -3.625364e-08, -0.41469327, 0.9099613, -0.5591929, -0.7543921, -0.3437963, -23.735163, 17.572538, -14.646496)
+light_energy = 2.466
+
+[node name="Characters" type="Node3D" parent="." unique_id=274016827 node_paths=PackedStringArray("PlayerPositions", "EnemyPositions", "EnemySide", "PlayerSide")]
+script = ExtResource("1_6qeyt")
+PlayerResource = ExtResource("2_srda1")
+BasicEnemyResource = ExtResource("3_18bk6")
+PlayerPositions = [NodePath("PlayerSide/Marker3D"), NodePath("PlayerSide/Marker3D2"), NodePath("PlayerSide/Marker3D3"), NodePath("PlayerSide/Marker3D4"), NodePath("PlayerSide/Marker3D5")]
+EnemyPositions = [NodePath("EnemySide/Marker3D"), NodePath("EnemySide/Marker3D2"), NodePath("EnemySide/Marker3D3"), NodePath("EnemySide/Marker3D4"), NodePath("EnemySide/Marker3D5")]
+EnemySide = NodePath("EnemySide")
+PlayerSide = NodePath("PlayerSide")
+
+[node name="PlayerSide" type="Node3D" parent="Characters" unique_id=2119541314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11.810985)
+
+[node name="Marker3D" type="Marker3D" parent="Characters/PlayerSide" unique_id=402313505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.04382, 0, -4.2328377)
+script = ExtResource("4_he3n4")
+
+[node name="Marker3D2" type="Marker3D" parent="Characters/PlayerSide" unique_id=1712507214]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.056041, 0, -4.2328377)
+script = ExtResource("4_he3n4")
+
+[node name="Marker3D3" type="Marker3D" parent="Characters/PlayerSide" unique_id=700321696]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06827068, 0, -4.2328377)
+script = ExtResource("4_he3n4")
+
+[node name="Marker3D4" type="Marker3D" parent="Characters/PlayerSide" unique_id=1787408418]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.01596, 0, -4.028022)
+script = ExtResource("4_he3n4")
+
+[node name="Marker3D5" type="Marker3D" parent="Characters/PlayerSide" unique_id=1117454070]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.001331, 0, -4.2328377)
+script = ExtResource("4_he3n4")
+
+[node name="EnemySide" type="Node3D" parent="Characters" unique_id=519143738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.015802)
+
+[node name="Marker3D" type="Marker3D" parent="Characters/EnemySide" unique_id=1913822324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.04382, 0, -4.2328377)
+script = ExtResource("4_he3n4")
+
+[node name="Marker3D2" type="Marker3D" parent="Characters/EnemySide" unique_id=1997857857]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.056041, 0, -4.2328377)
+script = ExtResource("4_he3n4")
+
+[node name="Marker3D3" type="Marker3D" parent="Characters/EnemySide" unique_id=1967504879]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06827068, 0, -4.2328377)
+script = ExtResource("4_he3n4")
+
+[node name="Marker3D4" type="Marker3D" parent="Characters/EnemySide" unique_id=559815554]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.01596, 0, -4.028022)
+script = ExtResource("4_he3n4")
+
+[node name="Marker3D5" type="Marker3D" parent="Characters/EnemySide" unique_id=777785207]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.001331, 0, -4.2328377)
+script = ExtResource("4_he3n4")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1242876249]
+
+[node name="Control" type="Control" parent="UI" unique_id=2034064019]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="UI/Control" unique_id=740861258]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "HEWWO AHAHAH :3"
+label_settings = SubResource("LabelSettings_wtcfe")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="instantiateButton" type="Button" parent="UI/Control" unique_id=281429002]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -265.0
+offset_top = -344.0
+offset_right = 258.0
+offset_bottom = -245.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 46
+action_mode = 0
+text = "Press to instantiate LMAO"
+autowrap_mode = 3
+script = ExtResource("1_wqic5")
+
+[node name="AttackButton" type="Button" parent="UI/Control" unique_id=981778829]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -265.0
+offset_top = -224.0
+offset_right = 258.0
+offset_bottom = -125.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 46
+action_mode = 0
+text = "Press to attack LMAO"
+autowrap_mode = 3
+script = ExtResource("1_wqic5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=798741661]
+libraries/ = SubResource("AnimationLibrary_0hol4")

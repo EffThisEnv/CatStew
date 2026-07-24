@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Characters" format=3 uid="uid://nq76edmj4ukc"]
+
+[ext_resource type="Script" uid="uid://b4ennji3c278i" path="res://Resources/Scripts/Characters/Characters.cs" id="2_kftp3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kk36p"]
+
+[resource]
+script = ExtResource("2_kftp3")
+CharacterName = "Enemy"
+CharacterType = 2
+CharacterMesh = SubResource("BoxMesh_kk36p")
+CharacterMaxHealth = 35
+CharacterMaxAttackDamage = 10
+CharacterSpeed = 2
+CharacterCoinCount = 1
+metadata/_custom_type_script = "uid://b4ennji3c278i"
