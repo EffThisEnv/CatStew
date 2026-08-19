@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Characters" format=3 uid="uid://bekq6utilntir"]
+
+[ext_resource type="Resource" uid="uid://sv05w6ldj22w" path="res://Resources/Scripts/BattleScripts/Skills/GenericAttack.tres" id="1_qltpm"]
+[ext_resource type="Script" uid="uid://b4ennji3c278i" path="res://Resources/Scripts/Characters/Characters.cs" id="2_8wd6b"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2gb1y"]
+
+[resource]
+script = ExtResource("2_8wd6b")
+CharacterName = "Player"
+CharacterMesh = SubResource("CapsuleMesh_2gb1y")
+CharacterMaxHealth = 100
+CharacterMaxAttackDamage = 40
+CharacterSpeed = 20
+CharacterCoinCount = 3
+MainSkill = ExtResource("1_qltpm")
+metadata/_custom_type_script = "uid://b4ennji3c278i"

@@ -9,8 +9,13 @@ public partial class CharUI_Updater : VBoxContainer
     BattleCharacter _assignedCharacter;
     Camera3D camera;
 
+    BattleUiManager battleUiManager;
+
     public override void _Ready()
     {
+        battleUiManager = GetNode<BattleUiManager>("/root/BattleUiManager");
+        BattleUiManager.onDisableAllUiRequest += (T) => DisableUI();
+        BattleUiManager.onEnableAllUiRequest += (T) => EnableUI();
         camera = GetViewport().GetCamera3D();
     }
 
@@ -60,6 +65,22 @@ public partial class CharUI_Updater : VBoxContainer
         {
             _assignedCharacter = null;
             QueueFree();
+        }
+    }
+
+    public void DisableUI()
+    {
+        if (_charUIContainer != null)
+        {
+            _charUIContainer.Visible = false;
+        }
+    }
+
+    public void EnableUI()
+    {
+        if (_charUIContainer != null)
+        {
+            _charUIContainer.Visible = true;
         }
     }
 }

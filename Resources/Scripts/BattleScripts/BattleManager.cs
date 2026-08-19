@@ -4,17 +4,10 @@ using System.Linq;
 using System.Collections.Generic;
 public partial class BattleManager : Node
 {
-	// Manages the current phase of the battle.
-	enum BattleState
-	{
-		Setup,          // Rolls initiative, builds the queue
-		PlayerTurn,     // Turns on UI buttons, waits for player input
-		EnemyTurn,      // Disables UI, asks AI to pick an action
-		ExecutingAction,// (Your 'Animating' state) Locks the board while attacks/healing play out
-		TurnCleanup,    // Checks if anyone died, removes them, advances the queue
-		GameOver        // Victory or Defeat screens
-	}
-	private BattleState _currentState = BattleState.Setup;
+
+	private BaseBattleState _currentState;
+	public BattleCharacter CurrentPlayer;
+	public int CurrentRound = 1;
 
 	[Export] private CharacterSpawner characterSpawner;
 	public Dictionary<int, BattleCharacter> ActiveCharacters = new Dictionary<int, BattleCharacter>();
@@ -22,11 +15,14 @@ public partial class BattleManager : Node
 
 	Actions actions;
 
+	[Export] public OptionButton ActionExecutorPicker, ActionPicker, TargetPicker;
+
 	public class EncounterPayload
 	{
 		public int PlayerCount;
 		public int EnemyCount;
 	}
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -35,20 +31,20 @@ public partial class BattleManager : Node
 		GD.Print("Actions node found: " + (actions != null));
 		// Manually calling _Ready() on another node is generally not recommended.
 		characterSpawner._Ready();
-		HandleSetupState();
+		_currentState = new SetupState(this);
+		_currentState.EnterState();
 	}
 
-	private void HandleSetupState()
+	public override void _Process(double delta)
 	{
-		EncounterPayload payload = new EncounterPayload
-		{
-			PlayerCount = 2,
-			EnemyCount = 3
-		};
+		_currentState.Update(delta);
+	}
 
-		// Spawns characters based on the payload.
-		ProcessEncounter(payload);
-		GenerateTurnQueue();
+	public void TransitionToState(BaseBattleState newState)
+	{
+		_currentState.ExitState();
+		_currentState = newState;
+		_currentState.EnterState();
 	}
 
 	public void ProcessEncounter(BattleManager.EncounterPayload payload)
@@ -79,7 +75,7 @@ public partial class BattleManager : Node
 		}
 	}
 
-	private void GenerateTurnQueue()
+	public void GenerateTurnQueue()
 	{
 		// Uses LINQ to order the character IDs by the Speed property of each character, in descending order.
 		TurnQueue = ActiveCharacters.Keys.OrderByDescending(id => ActiveCharacters[id].CharacterSpeed).ToList();
@@ -92,12 +88,8 @@ public partial class BattleManager : Node
 
 	private void UpdateTurnQueue()
 	{
+		// Simply filter out dead IDs without re-sorting or resetting the round
 		TurnQueue = TurnQueue.Where(id => ActiveCharacters.ContainsKey(id)).ToList();
-		GD.Print("Queue updated!");
-		foreach (int id in TurnQueue)
-		{
-			GD.Print($"Queued ID {id} with Speed {ActiveCharacters[id].CharacterSpeed}");
-		}
 	}
 
 }

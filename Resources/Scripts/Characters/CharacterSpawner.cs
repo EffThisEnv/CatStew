@@ -7,7 +7,7 @@ public partial class CharacterSpawner : Node3D
 {
 	// For complex UI, it's better to create a separate scene for the UI element (e.g., "CharUI.tscn")
 	// and instantiate it here, rather than creating each node in code.
-	[Export] private Characters PlayerResource, BasicEnemyResource;
+	[Export] private Characters PlayerResource, BasicEnemyResource, BasicFriendResource;
 
 	[Export] public Characters.CharType CharacterTypeToSpawn { get; private set; }
 
@@ -44,7 +44,15 @@ public partial class CharacterSpawner : Node3D
 		var targetSide = (charType == Characters.CharType.Player || charType == Characters.CharType.Ally) ? PlayerSide : EnemySide;
 		targetSide.AddChild(newChar);
 
-		newChar.SetInitialValues(_idCounter, charType == Characters.CharType.Player || charType == Characters.CharType.Ally ? PlayerResource : BasicEnemyResource);
+		Characters selectedResource = charType switch
+		{
+			Characters.CharType.Player => PlayerResource,
+			Characters.CharType.Ally => BasicFriendResource,
+			Characters.CharType.Enemy => BasicEnemyResource,
+			_ => BasicEnemyResource // Fallback
+		};
+
+		newChar.SetInitialValues(_idCounter, selectedResource);
 
 		availableSlot.PlaceCharacter(newChar);
 		newChar.GlobalPosition = availableSlot.GlobalPosition;
@@ -53,7 +61,7 @@ public partial class CharacterSpawner : Node3D
 
 		return newChar;
 	}
-	//test test test
+	//test test 
 
 	private CharacterSlot GetAvailableSlot(Characters.CharType charType)
 	{

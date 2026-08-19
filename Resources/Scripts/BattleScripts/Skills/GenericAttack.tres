@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Skills" format=3 uid="uid://sv05w6ldj22w"]
+
+[ext_resource type="Script" uid="uid://chnnk763pv5ki" path="res://Resources/Scripts/BattleScripts/Skills.cs" id="1_5agh4"]
+
+[resource]
+script = ExtResource("1_5agh4")
+SkillName = "GenericAttack"
+Power = 10
+metadata/_custom_type_script = "uid://chnnk763pv5ki"

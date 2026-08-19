@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cll6fwtm6ox80" path="res://Resources/Scripts/Characters/CharacterSpawner.cs" id="1_6qeyt"]
 [ext_resource type="Script" uid="uid://brjobuigcl5s1" path="res://Resources/Scripts/BattleScripts/BattleManager.cs" id="1_he3n4"]
-[ext_resource type="Script" uid="uid://cqgtws637y03i" path="res://Resources/Scripts/UI_Scripts/AttackButton.cs" id="1_wqic5"]
-[ext_resource type="Resource" uid="uid://bekq6utilntir" path="res://Resources/Scripts/Characters/PlayerCharacter.tres" id="2_srda1"]
-[ext_resource type="Resource" uid="uid://nq76edmj4ukc" path="res://Resources/Scripts/Characters/BasicEnemy.tres" id="3_18bk6"]
+[ext_resource type="Resource" uid="uid://bekq6utilntir" path="res://Resources/Scripts/Characters/CharacterResources/PlayerCharacter.tres" id="2_srda1"]
+[ext_resource type="Resource" uid="uid://nq76edmj4ukc" path="res://Resources/Scripts/Characters/CharacterResources/BasicEnemy.tres" id="3_18bk6"]
 [ext_resource type="Script" uid="uid://b523f4c1lpryy" path="res://Resources/Scripts/Characters/CharacterSlot.cs" id="4_he3n4"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_srda1"]
@@ -12,8 +11,44 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_10u8c"]
 albedo_color = Color(0, 0, 0.07058824, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_wtcfe"]
-font_size = 64
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wp5od"]
+bg_color = Color(0.23230338, 0.21396056, 0.2456522, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5612954, 0.7458663, 0.82985497, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k56px"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.56078434, 0.74509805, 0.83137256, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 10
+expand_margin_top = 18.0
+expand_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dagrs"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.56078434, 0.74509805, 0.83137256, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="Animation" id="Animation_0e48y"]
 length = 0.001
@@ -115,57 +150,116 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 
-[node name="Label" type="Label" parent="UI/Control" unique_id=740861258]
-visible = false
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="UI/Control" unique_id=1592574466]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "HEWWO AHAHAH :3"
-label_settings = SubResource("LabelSettings_wtcfe")
-horizontal_alignment = 1
-vertical_alignment = 1
+ratio = 1.7778
 
-[node name="instantiateButton" type="Button" parent="UI/Control" unique_id=281429002]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -265.0
-offset_top = -344.0
-offset_right = 258.0
-offset_bottom = -245.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 46
-action_mode = 0
-text = "Press to instantiate LMAO"
-autowrap_mode = 3
-script = ExtResource("1_wqic5")
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/AspectRatioContainer" unique_id=995938678]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
 
-[node name="AttackButton" type="Button" parent="UI/Control" unique_id=981778829]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -265.0
-offset_top = -224.0
-offset_right = 258.0
-offset_bottom = -125.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/AspectRatioContainer/MarginContainer" unique_id=825375828]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -26.155)
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/AspectRatioContainer/MarginContainer/HBoxContainer" unique_id=931057749]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wp5od")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/AspectRatioContainer/MarginContainer/HBoxContainer/PanelContainer" unique_id=496404064]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/AspectRatioContainer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer" unique_id=1436308650]
+custom_maximum_size = Vector2(1500, -1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 51
+alignment = 1
+
+[node name="ExecuteActionButton" type="Button" parent="UI/Control/AspectRatioContainer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=981778829]
+custom_minimum_size = Vector2(456.04, 0)
+custom_maximum_size = Vector2(456.04, 200)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.69642335, 0.8311628, 0.8955842, 1)
 theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_k56px")
 action_mode = 0
-text = "Press to attack LMAO"
+text = "Press to execute action LMAO"
 autowrap_mode = 3
-script = ExtResource("1_wqic5")
+
+[node name="ActionExecutorPicker" type="OptionButton" parent="UI/Control/AspectRatioContainer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1590919141]
+custom_minimum_size = Vector2(264.93, 93.35)
+custom_maximum_size = Vector2(-1, 101.595)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.69803923, 0.83137256, 0.89411765, 1)
+theme_override_font_sizes/font_size = 38
+theme_override_styles/normal = SubResource("StyleBoxFlat_dagrs")
+theme_override_constants/arrow_margin = 24
+autowrap_mode = 3
+autowrap_trim_flags = 64
+icon_alignment = 2
+allow_reselect = true
+
+[node name="AttackPicker" type="OptionButton" parent="UI/Control/AspectRatioContainer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1179558479]
+visible = false
+custom_minimum_size = Vector2(264.93, 93.35)
+custom_maximum_size = Vector2(-1, 101.595)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.69803923, 0.83137256, 0.89411765, 1)
+theme_override_font_sizes/font_size = 38
+theme_override_styles/normal = SubResource("StyleBoxFlat_dagrs")
+theme_override_constants/arrow_margin = 24
+autowrap_mode = 3
+autowrap_trim_flags = 64
+icon_alignment = 2
+selected = 0
+allow_reselect = true
+item_count = 4
+popup/item_0/text = "  Attack"
+popup/item_0/id = 0
+popup/item_1/text = "  Heal"
+popup/item_1/id = 1
+popup/item_2/text = "  Buff"
+popup/item_2/id = 2
+popup/item_3/text = "  Stun"
+popup/item_3/id = 3
+
+[node name="TargetPicker" type="OptionButton" parent="UI/Control/AspectRatioContainer/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1203715060]
+visible = false
+custom_minimum_size = Vector2(264.93, 93.35)
+custom_maximum_size = Vector2(-1, 101.595)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.69803923, 0.83137256, 0.89411765, 1)
+theme_override_font_sizes/font_size = 38
+theme_override_styles/normal = SubResource("StyleBoxFlat_dagrs")
+theme_override_constants/arrow_margin = 24
+autowrap_mode = 3
+autowrap_trim_flags = 64
+icon_alignment = 2
+allow_reselect = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=798741661]
 libraries/ = SubResource("AnimationLibrary_0hol4")
