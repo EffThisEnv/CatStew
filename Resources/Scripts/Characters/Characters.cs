@@ -18,6 +18,7 @@ public partial class Characters : Resource
 	[Export] public int CharacterMaxAttackDamage { get; set; }
 	[Export] public int CharacterSpeed { get; set; }
 	[Export] public int CharacterCoinCount { get; set; }
+	[Export] public int StunDuration { get; set; } = 0;
 
 	[Export] public Skills MainSkill { get; set; }
 	[Export] public Skills SecondarySkill { get; set; }

@@ -9,12 +9,15 @@ public partial class SetupState : BaseBattleState
 
 	public override void EnterState()
 	{
+		GD.Print("ENTERING SetupState");
 		if (base.battleManager.CurrentRound == 1)
 		{
 			BattleManager.EncounterPayload payload = new BattleManager.EncounterPayload
 			{
 
 				PlayerCount = 2,
+
+				AllyCount = 1,
 
 				EnemyCount = 3
 
@@ -24,6 +27,7 @@ public partial class SetupState : BaseBattleState
 			base.battleManager.ProcessEncounter(payload);
 		}
 		base.battleManager.CurrentRound++;
+		BattleManager.OnActiveCharactersReady?.Invoke(base.battleManager.ActiveCharacters);
 		base.battleManager.GenerateTurnQueue();
 		base.battleManager.TransitionToState(new CheckNextTurnState(base.battleManager));
 	}

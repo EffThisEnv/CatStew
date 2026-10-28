@@ -14,23 +14,29 @@ public partial class BattleManager : Node
 	public List<int> TurnQueue { get; private set; } = new List<int>();
 
 	Actions actions;
-
-	[Export] public OptionButton ActionExecutorPicker, ActionPicker, TargetPicker;
+	BattleUiManager battleUiManager;
 
 	public class EncounterPayload
 	{
 		public int PlayerCount;
+		public int AllyCount;
 		public int EnemyCount;
 	}
+
+	public static Action<Dictionary<int, BattleCharacter>> OnActiveCharactersReady;
 
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		actions = GetNode<Actions>("/root/Actions");
+		battleUiManager = GetNode<BattleUiManager>("/root/World/UI");
+		GD.Print(battleUiManager.Name);
 		GD.Print("Actions node found: " + (actions != null));
+		GD.Print("BattleUiManager node found: " + (battleUiManager != null));
 		// Manually calling _Ready() on another node is generally not recommended.
 		characterSpawner._Ready();
+		OnActiveCharactersReady += battleUiManager.OnActivePlayersReady;
 		_currentState = new SetupState(this);
 		_currentState.EnterState();
 	}
@@ -57,10 +63,23 @@ public partial class BattleManager : Node
 				// Remove the dead character from the active list and update the turn queue.
 				ActiveCharacters.Remove(c.CharacterId);
 				UpdateTurnQueue();
+				battleUiManager._repopulateAllOptionButtons(ActiveCharacters);
 			};
 			// Add the newly spawned character to our dictionary of active characters.
 			ActiveCharacters.Add(temp.CharacterId, temp);
-			GD.Print($"Spawned player skills are: {temp.CharacterMainSkill.SkillName}, {temp.CharacterSecondarySkill.SkillName}");
+			//GD.Print($"Spawned player skills are: {temp.CharacterMainSkill.SkillName}, {temp.CharacterSecondarySkill.SkillName}");
+		}
+
+		for (int i = 0; i < payload.AllyCount; i++)
+		{
+			BattleCharacter temp = characterSpawner.InstantiateCharacter(Characters.CharType.Ally);
+			temp.OnCharacterDeath += (c) =>
+			{
+				ActiveCharacters.Remove(c.CharacterId);
+				UpdateTurnQueue();
+				battleUiManager._repopulateAllOptionButtons(ActiveCharacters);
+			};
+			ActiveCharacters.Add(temp.CharacterId, temp);
 		}
 
 		for (int i = 0; i < payload.EnemyCount; i++)
@@ -70,6 +89,7 @@ public partial class BattleManager : Node
 			{
 				ActiveCharacters.Remove(c.CharacterId);
 				UpdateTurnQueue();
+				battleUiManager._repopulateAllOptionButtons(ActiveCharacters);
 			};
 			ActiveCharacters.Add(temp.CharacterId, temp);
 		}

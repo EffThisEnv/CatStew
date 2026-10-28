@@ -1,7 +1,8 @@
 [gd_resource type="Resource" script_class="Characters" format=3 uid="uid://c813glkp7v1ll"]
 
-[ext_resource type="Resource" uid="uid://sv05w6ldj22w" path="res://Resources/Scripts/BattleScripts/Skills/GenericAttack.tres" id="1_a3iqo"]
+[ext_resource type="Resource" uid="uid://d04brel0sja0m" path="res://Resources/Scripts/BattleScripts/Skills/GenericBuff.tres" id="1_uy2qh"]
 [ext_resource type="Script" uid="uid://b4ennji3c278i" path="res://Resources/Scripts/Characters/Characters.cs" id="1_xgmyy"]
+[ext_resource type="Resource" uid="uid://bm6ka45d0gaq4" path="res://Resources/Scripts/BattleScripts/Skills/GenericHeal2.tres" id="2_nvdkb"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_a3iqo"]
 
@@ -14,5 +15,6 @@ CharacterMaxHealth = 40
 CharacterMaxAttackDamage = 10
 CharacterSpeed = 5
 CharacterCoinCount = 2
-MainSkill = ExtResource("1_a3iqo")
+MainSkill = ExtResource("1_uy2qh")
+SecondarySkill = ExtResource("2_nvdkb")
 metadata/_custom_type_script = "uid://b4ennji3c278i"

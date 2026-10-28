@@ -6,4 +6,5 @@
 script = ExtResource("1_5agh4")
 SkillName = "GenericAttack"
 Power = 10
+Target = 2
 metadata/_custom_type_script = "uid://chnnk763pv5ki"

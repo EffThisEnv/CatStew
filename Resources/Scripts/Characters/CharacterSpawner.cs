@@ -22,7 +22,7 @@ public partial class CharacterSpawner : Node3D
 
 	public override void _Ready()
 	{
-		_uiControlNode = GetNode<Control>("../UI/Control");
+		_uiControlNode = GetNode<Control>("../UI/PlayerControls_Control");
 	}
 
 	public BattleCharacter InstantiateCharacter(Characters.CharType charType)

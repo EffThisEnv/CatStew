@@ -11,12 +11,12 @@ public partial class PlayerTurnState : BaseBattleState
 	public override void EnterState()
 	{
 		GD.Print("Player Turn State");
-		battleManager.ActionExecutorPicker.Visible = true;
-		battleManager.ActionExecutorPicker.Clear();
-		foreach (var character in battleManager.ActiveCharacters.Values)
-		{
-			battleManager.ActionExecutorPicker.AddItem(character.CharacterName, character.CharacterId - 1);
-		}
+		// battleUiManager.ActionExecutorPicker.Visible = true;
+		// battleManager.ActionExecutorPicker.Clear();
+		// foreach (var character in battleManager.ActiveCharacters.Values)
+		// {
+		// 	battleManager.ActionExecutorPicker.AddItem(character.CharacterName, character.CharacterId - 1);
+		// }
 	}
 
 	public override void ExitState()

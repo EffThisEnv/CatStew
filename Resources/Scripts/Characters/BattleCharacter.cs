@@ -8,19 +8,16 @@ public partial class BattleCharacter : MeshInstance3D
 	public string CharacterName { get; private set; }
 	public Mesh CharacterMesh { get; private set; }
 	public Characters.CharType CharacterType;
-
 	public int CharacterMaxHealth { get; private set; }
 	public int CharacterCurrentHealth { get; set; }
-
 	public int CharacterSpeed { get; set; }
-
 	public int CharacterMaxAttackDamage { get; set; }
 	public int CharacterCurrentAttackDamage { get; set; }
 	public int CharacterCoinCount { get; set; }
-
+	public int StunDuration { get; private set; } = 0;
+	public bool IsStunned => StunDuration > 0;
 	public Skills CharacterMainSkill { get; private set; }
 	public Skills CharacterSecondarySkill { get; private set; }
-
 	public event Action<BattleCharacter> OnCharacterValuesChanged;
 	public event Action<BattleCharacter> OnCharacterDeath;
 
@@ -35,6 +32,7 @@ public partial class BattleCharacter : MeshInstance3D
 		CharacterMaxHealth = characterResource.CharacterMaxHealth;
 		CharacterMaxAttackDamage = characterResource.CharacterMaxAttackDamage;
 		CharacterSpeed = characterResource.CharacterSpeed;
+		StunDuration = characterResource.StunDuration;
 		CharacterMainSkill = characterResource.MainSkill;
 		CharacterSecondarySkill = characterResource.SecondarySkill;
 
@@ -61,6 +59,21 @@ public partial class BattleCharacter : MeshInstance3D
 
 		// Check for death after values change.
 		CheckDeath();
+	}
+
+	public void ApplyStun(int turns)
+	{
+		StunDuration = Math.Max(StunDuration, turns);
+		OnCharacterValuesChanged?.Invoke(this);
+	}
+
+	public void DecrementStatusEffects()
+	{
+		if (StunDuration > 0)
+		{
+			StunDuration--;
+			GD.Print($"{CharacterName} stun reduced. Remaining turns: {StunDuration}");
+		}
 	}
 
 	private bool CheckDeath()

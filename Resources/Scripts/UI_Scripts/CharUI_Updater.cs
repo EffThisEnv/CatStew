@@ -13,9 +13,9 @@ public partial class CharUI_Updater : VBoxContainer
 
     public override void _Ready()
     {
-        battleUiManager = GetNode<BattleUiManager>("/root/BattleUiManager");
-        BattleUiManager.onDisableAllUiRequest += (T) => DisableUI();
-        BattleUiManager.onEnableAllUiRequest += (T) => EnableUI();
+        battleUiManager = GetNode<BattleUiManager>("/root/World/UI");
+        BattleUiManager.OnDisableAllUiRequest += DisableUI;
+        BattleUiManager.OnEnableAllUiRequest += EnableUI;
         camera = GetViewport().GetCamera3D();
     }
 
@@ -66,6 +66,11 @@ public partial class CharUI_Updater : VBoxContainer
             _assignedCharacter = null;
             QueueFree();
         }
+    }
+    public override void _ExitTree()
+    {
+        BattleUiManager.OnDisableAllUiRequest -= DisableUI;
+        BattleUiManager.OnEnableAllUiRequest -= EnableUI;
     }
 
     public void DisableUI()
